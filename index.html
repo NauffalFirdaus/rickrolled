@@ -59,8 +59,7 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        
-        /* Hide the audio player completely */
+        /* Hide audio player */
         audio {
             display: none;
         }
@@ -68,43 +67,54 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎥 You NEED to Watch This Video!</h1>
-        <p>It's super important... trust me 😉</p>
+        <h1>Senang je nak jawapan</h1>
+        
         
         <div class="video-container">
-            <video autoplay muted loop playsinline>
-                <source src="rick.mp4" type="video/mp4">
+            <video autoplay loop playsinline muted>
+                <source src="roll.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         
         <div class="rickroll-text">
-            you got rickrolled haha 😂<br><br>
-            okay check txt file kat desktop
+            FLAG{thank_you_guys}<br><br>
         </div>
     </div>
 
     <!-- Background Music: Never Gonna Give You Up -->
-    <audio autoplay loop>
+    <audio id="bg-music" loop>
         <source src="ricksong.mp3" type="audio/mpeg">
-        <source src="music.ogg" type="audio/ogg"> <!-- Optional fallback -->
+        <source src="music.ogg" type="audio/ogg">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Optional: Force audio autoplay with JavaScript (helps on some browsers) -->
+    <!-- JavaScript to force autoplay for both video and audio -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.querySelector('audio');
-            audio.play().catch(function(error) {
-                console.log("Autoplay prevented:", error);
-            });
-        });
+        // Wait for page to load
+        window.addEventListener('load', function() {
+            const video = document.querySelector('video');
+            const audio = document.getElementById('bg-music');
 
-        // Try to play audio on first user interaction (bypass autoplay blocks)
-        document.body.addEventListener('click', function() {
-            document.querySelector('audio').play();
-        }, { once: true });
+            // Ensure video plays (already muted so no issue)
+            if (video.paused) {
+                video.play().catch(() => {
+                    console.log("Video autoplay blocked, will retry on interaction");
+                });
+            }
+
+            // Try to play audio immediately
+            audio.play().catch(function(error) {
+                console.log("Autoplay blocked:", error);
+            });
+
+            // Fallback: Play audio on first user interaction (click/tap)
+            document.body.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                }
+            }, { once: true }); // Only once to avoid spam
+        });
     </script>
 </body>
-
 </html>
