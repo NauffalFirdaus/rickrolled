@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important Video - Watch Now!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            background: #000;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        .rickroll-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff0066;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Hide the audio player completely */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎥 You NEED to Watch This Video!</h1>
+        <p>It's super important... trust me 😉</p>
+        
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="rick.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div class="rickroll-text">
+            you got rickrolled haha 😂<br><br>
+            okay check txt file kat desktop
+        </div>
+    </div>
+
+    <!-- Background Music: Never Gonna Give You Up -->
+    <audio autoplay loop>
+        <source src="ricksong.mp3" type="audio/mpeg">
+        <source src="music.ogg" type="audio/ogg"> <!-- Optional fallback -->
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Optional: Force audio autoplay with JavaScript (helps on some browsers) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.querySelector('audio');
+            audio.play().catch(function(error) {
+                console.log("Autoplay prevented:", error);
+            });
+        });
+
+        // Try to play audio on first user interaction (bypass autoplay blocks)
+        document.body.addEventListener('click', function() {
+            document.querySelector('audio').play();
+        }, { once: true });
+    </script>
+</body>
+</html>
