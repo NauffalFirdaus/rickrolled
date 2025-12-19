@@ -1,121 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Important Video - Watch Now!</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-            margin: 0;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
-        p {
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 40px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            margin-bottom: 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            background: #000;
-        }
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;
-        }
-        .rickroll-text {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff0066;
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        /* Hide audio player */
-        audio {
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Click to Reveal</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: white;
+    text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.content {
+    display: none;
+    padding: 40px;
+}
+
+.video-container {
+    max-width: 900px;
+    margin: auto;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.flag {
+    margin-top: 30px;
+    font-size: 26px;
+    color: #ff0066;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Cari flag ke? tu kat bawah tu</h1>
-        
-        
-        <div class="video-container">
-            <video autoplay loop playsinline muted>
-                <source src="roll.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        
-        <div class="rickroll-text">
-            FLAG{thank_you_guys}<br><br>
-        </div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay">
+    👉 Click to reveal flag
+</div>
+
+<!-- Hidden content -->
+<div class="content" id="content">
+    <h1>Cari flag ke? 😏</h1>
+
+    <div class="video-container">
+        <video id="video" loop playsinline muted>
+            <source src="roll_web.mp4" type="video/mp4">
+        </video>
     </div>
 
-    <!-- Background Music: Never Gonna Give You Up -->
-    <audio id="bg-music" loop>
-        <source src="ricksong.mp3" type="audio/mpeg">
-        <source src="music.ogg" type="audio/ogg">
-        Your browser does not support the audio element.
-    </audio>
+    <div class="flag">
+        FLAG{thank_you_guys}
+    </div>
+</div>
 
-    <!-- JavaScript to force autoplay for both video and audio -->
-    <script>
-        // Wait for page to load
-        window.addEventListener('load', function() {
-            const video = document.querySelector('video');
-            const audio = document.getElementById('bg-music');
+<audio id="audio" loop>
+    <source src="ricksong.mp3" type="audio/mpeg">
+</audio>
 
-            // Ensure video plays (already muted so no issue)
-            if (video.paused) {
-                video.play().catch(() => {
-                    console.log("Video autoplay blocked, will retry on interaction");
-                });
-            }
+<script>
+const overlay = document.getElementById("overlay");
+const content = document.getElementById("content");
+const video = document.getElementById("video");
+const audio = document.getElementById("audio");
 
-            // Try to play audio immediately
-            audio.play().catch(function(error) {
-                console.log("Autoplay blocked:", error);
-            });
+overlay.addEventListener("click", () => {
+    // Reveal content
+    overlay.style.display = "none";
+    content.style.display = "block";
 
-            // Fallback: Play audio on first user interaction (click/tap)
-            document.body.addEventListener('click', function() {
-                if (audio.paused) {
-                    audio.play();
-                }
-            }, { once: true }); // Only once to avoid spam
-        });
-    </script>
+    // Start video
+    video.muted = false;
+    video.play().catch(() => {});
+
+    // Start audio
+    audio.play().catch(() => {});
+});
+</script>
+
 </body>
 </html>
-
